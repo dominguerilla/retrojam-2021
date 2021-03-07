@@ -4,7 +4,7 @@ using UnityEngine;
 using Chronos;
 using BNG;
 
-public class TimeGun : RaycastWeapon
+public class TimeGun : BaseBehaviour
 {
     [SerializeField]
     float slowmoDuration = 6f;
@@ -12,21 +12,10 @@ public class TimeGun : RaycastWeapon
     [SerializeField]
     TargetTime targetTimeController;
 
-    public override void OnGrab (Grabber grabber)
+    public void OnDetach()
     {
-        base.OnGrab(grabber);
-
-        Debug.Log($"TimeGun.OnGrab: Grabber {grabber.gameObject}");
-        if (grabber.gameObject.name.StartsWith("Holster"))
-        {
-            Debug.Log("Slowmo Toggled");
-            ToggleTargetSlowMotion(this.slowmoDuration);
-        }
-    }
-
-    public void OnDoff()
-    {
-        
+        Debug.Log("Slowmo Toggled");
+        ToggleTargetSlowMotion(this.slowmoDuration);
     }
 
     void ToggleTargetSlowMotion(float duration)
