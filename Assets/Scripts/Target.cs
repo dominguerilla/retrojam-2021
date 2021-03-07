@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Chronos;
 
-public class Target : MonoBehaviour
+public class Target : BaseBehaviour
 {
     /// <summary>
     /// Starts moving the object on Scene start.
@@ -29,10 +30,12 @@ public class Target : MonoBehaviour
     Vector3 movementDirectionScalar = Vector3.zero;
 
     Vector3 pivotPoint;
+    Timeline timeline;
 
     private void Start()
     {
         SetPivotPoint(this.transform.position);
+        this.timeline = this.time;
         if (moveOnStart)
         {
             StartMoving();
@@ -49,13 +52,15 @@ public class Target : MonoBehaviour
         int flip = 1;
         while (true)
         {
-            float currentDistanceFromPivot = (this.transform.position - this.pivotPoint).magnitude;
-            if (currentDistanceFromPivot >= maxDistanceDelta)
+            if (time.timeScale > 0)
             {
-                flip *= -1;
+                float currentDistanceFromPivot = (this.transform.position - this.pivotPoint).magnitude;
+                if (currentDistanceFromPivot >= maxDistanceDelta)
+                {
+                    flip *= -1;
+                }
+                this.transform.position = Vector3.MoveTowards(this.transform.position, this.pivotPoint + (movementDirectionScalar * maxDistanceDelta * flip), moveSpeed * timeline.deltaTime);
             }
-            this.transform.position = Vector3.MoveTowards(this.transform.position, this.pivotPoint + (movementDirectionScalar * maxDistanceDelta * flip), moveSpeed * Time.deltaTime);
-
             yield return new WaitForEndOfFrame();
         }
     }
