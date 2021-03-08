@@ -36,10 +36,11 @@ public class TargetTime : BaseBehaviour
     /// </summary>
     /// <param name="timeObject"></param>
     /// <returns></returns>
-    public bool TryToggleSlowMotion(MonoBehaviour timeObject)
+    public bool ToggleSlowMotion(MonoBehaviour timeObject)
     {
         if (controllingObject == null || controllingObject == timeObject)
         {
+            Debug.Log("Slowmo Toggled");
             _isSlowMotion = !_isSlowMotion;
             if (_isSlowMotion)
             {
@@ -57,9 +58,9 @@ public class TargetTime : BaseBehaviour
         return false;
     }
 
-    public bool TryToggleSlowMotion(MonoBehaviour timeObject, float duration)
+    public bool SetSlowMotionForDuration(MonoBehaviour timeObject, float duration)
     {
-        if (targetClock == null) return false;
+        if (targetClock == null || _isSlowMotion) return false;
         if (controllingObject == null || controllingObject == timeObject)
         {
             StartCoroutine(SlowMotion(timeObject, duration));
@@ -69,13 +70,13 @@ public class TargetTime : BaseBehaviour
     }
 
     IEnumerator SlowMotion(MonoBehaviour timeObject, float duration) {
-        
+
         while (targetClock.localTimeScale > 0)
         {
             targetClock.localTimeScale = Mathf.Max(targetClock.localTimeScale - 0.03f, 0);
             yield return new WaitForEndOfFrame();
         }
-        TryToggleSlowMotion(timeObject);
+        ToggleSlowMotion(timeObject);
         yield return timeline.WaitForSeconds(duration);
 
         while (targetClock.localTimeScale < 1.0)
@@ -83,7 +84,7 @@ public class TargetTime : BaseBehaviour
             targetClock.localTimeScale = Mathf.Min(targetClock.localTimeScale + 0.03f, 1.0f);
             yield return new WaitForEndOfFrame();
         }
-        TryToggleSlowMotion(timeObject);
+        ToggleSlowMotion(timeObject);
         yield return null;
     }
 }

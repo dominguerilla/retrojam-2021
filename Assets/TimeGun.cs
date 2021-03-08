@@ -23,12 +23,11 @@ public class TimeGun : BaseBehaviour
             _isInitialized = true;
             return;
         }
-        Debug.Log("Slowmo Toggled");
-        ToggleTargetSlowMotion(this.slowmoDuration);
+        StartSlowMotion(this.slowmoDuration);
     }
 
-    void ToggleTargetSlowMotion(float duration)
+    void StartSlowMotion(float duration)
     {
-        targetTimeController.TryToggleSlowMotion(this, duration);
+        targetTimeController.SetSlowMotionForDuration(this, duration);
     }
 }
