@@ -82,7 +82,7 @@ namespace BNG {
         Rigidbody rigid;
         bool initialWasKinematic;
 
-        private void Start() {
+        protected virtual void Start() {
             _startingHealth = Health;
             rigid = GetComponent<Rigidbody>();
             if (rigid) {
@@ -185,7 +185,7 @@ namespace BNG {
             }
         }
 
-        IEnumerator RespawnRoutine(float seconds) {
+        protected virtual IEnumerator RespawnRoutine(float seconds) {
 
             yield return new WaitForSeconds(seconds);
 

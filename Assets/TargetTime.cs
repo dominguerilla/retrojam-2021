@@ -59,6 +59,7 @@ public class TargetTime : BaseBehaviour
 
     public bool TryToggleSlowMotion(MonoBehaviour timeObject, float duration)
     {
+        if (targetClock == null) return false;
         if (controllingObject == null || controllingObject == timeObject)
         {
             StartCoroutine(SlowMotion(timeObject, duration));
@@ -68,8 +69,20 @@ public class TargetTime : BaseBehaviour
     }
 
     IEnumerator SlowMotion(MonoBehaviour timeObject, float duration) {
+        
+        while (targetClock.localTimeScale > 0)
+        {
+            targetClock.localTimeScale = Mathf.Max(targetClock.localTimeScale - 0.03f, 0);
+            yield return new WaitForEndOfFrame();
+        }
         TryToggleSlowMotion(timeObject);
         yield return timeline.WaitForSeconds(duration);
+
+        while (targetClock.localTimeScale < 1.0)
+        {
+            targetClock.localTimeScale = Mathf.Min(targetClock.localTimeScale + 0.03f, 1.0f);
+            yield return new WaitForEndOfFrame();
+        }
         TryToggleSlowMotion(timeObject);
         yield return null;
     }

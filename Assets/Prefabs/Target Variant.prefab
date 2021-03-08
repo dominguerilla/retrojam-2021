@@ -1,5 +1,73 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1709355439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913952352211654665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6090da511f8374135a15dd8655adcd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recordingInterval: 0.5
+  _mode: 1
+  _globalClockKey: Targets
+  _rewindable: 0
+  _recordingDuration: 30
+--- !u!114 &1709355443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913952352211654665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4055eb6f248c3444bf9cb39fd0fba15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveOnStart: 1
+  moveSpeed: 7
+  maxDistanceDelta: 5
+  movementDirectionScalar: {x: 1, y: 0, z: 0}
+--- !u!114 &112690943629977199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913952352211654665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501efcfec9202484f97b5d73a3ecd2a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 5
+  SpawnOnDeath: {fileID: 0}
+  ActivateGameObjectsOnDeath:
+  - {fileID: 1419029331676445666}
+  DeactivateGameObjectsOnDeath:
+  - {fileID: 8785830121420291881}
+  DeactivateCollidersOnDeath:
+  - {fileID: 5380904307359123462}
+  DestroyOnDeath: 0
+  DropOnDeath: 1
+  DestroyDelay: 10
+  Respawn: 1
+  RespawnTime: 3
+  RemoveBulletHolesOnDeath: 1
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
+  onRespawn:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &69695191016974329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +78,7 @@ PrefabInstance:
     - target: {fileID: 2920561618962350064, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
       propertyPath: m_Name
-      value: Target
+      value: Target Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3904871795965691247, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
@@ -77,5 +145,35 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a16697a27ecdfb34e9ba9e4d37abffb6, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 8971202009475290949, guid: 496ea98f57b529f4a833f65409a22871,
+        type: 3}
+      propertyPath: RespawnTime
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8971202009475290949, guid: 496ea98f57b529f4a833f65409a22871, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 496ea98f57b529f4a833f65409a22871, type: 3}
+--- !u!1 &2913952352211654665 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2920561618962350064, guid: 496ea98f57b529f4a833f65409a22871,
+    type: 3}
+  m_PrefabInstance: {fileID: 69695191016974329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5380904307359123462 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 5357969217081323519, guid: 496ea98f57b529f4a833f65409a22871,
+    type: 3}
+  m_PrefabInstance: {fileID: 69695191016974329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8785830121420291881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8726307681074174160, guid: 496ea98f57b529f4a833f65409a22871,
+    type: 3}
+  m_PrefabInstance: {fileID: 69695191016974329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1419029331676445666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1389075438926666779, guid: 496ea98f57b529f4a833f65409a22871,
+    type: 3}
+  m_PrefabInstance: {fileID: 69695191016974329}
+  m_PrefabAsset: {fileID: 0}
