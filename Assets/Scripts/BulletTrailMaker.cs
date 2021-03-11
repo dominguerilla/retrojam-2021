@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletTrailMaker : MonoBehaviour
 {
     public float decaySpeed = 2.0f;
-    public List<LineRenderer> bulletTrailPool = new List<LineRenderer>();
+    public ObjectPool bulletTrailPool;
 
     List<LineRenderer> activeTrails = new List<LineRenderer>();
 
@@ -18,7 +18,6 @@ public class BulletTrailMaker : MonoBehaviour
     public void CreateBulletTrail(Vector3 origin, Vector3 end)
     {
         LineRenderer trail = GetTrail();
-        trail.gameObject.SetActive(true);
         trail.transform.position = origin;
 
         var trailPositions = new Vector3[2] { Vector3.zero, end};
@@ -35,33 +34,21 @@ public class BulletTrailMaker : MonoBehaviour
         
         while (alpha > 0)
         {
+            //TODO: I don't know if this actually works.
             trail.material.SetColor("_MainColor", new Color(trailColor.r, trailColor.b, trailColor.g, alpha));
             alpha -= Time.deltaTime * decaySpeed;
             yield return new WaitForEndOfFrame();
         }
 
         activeTrails.Remove(trail);
-        trail.gameObject.SetActive(false);
-        bulletTrailPool.Add(trail);
+        bulletTrailPool.AddObject(trail.transform);
 
     }
 
     LineRenderer GetTrail()
     {
-        LineRenderer trail;
-        if (bulletTrailPool.Count > 0)
-        {
-            trail = bulletTrailPool[0];
-            bulletTrailPool.RemoveAt(0);
-            return trail;
-        }
-        if (activeTrails.Count <= 0)
-        {
-            throw new System.InvalidOperationException("No bullet trails in reserve or active pool!");
-        }
-        trail = activeTrails[0];
-        activeTrails.RemoveAt(0);
-        return trail;
-        
+        Transform trail = bulletTrailPool.GetNextObject();
+        trail.gameObject.SetActive(true);
+        return trail.GetComponent<LineRenderer>();
     }
 }

@@ -10,7 +10,7 @@ public class TimeGun : BaseBehaviour
     float slowmoDuration = 6f;
 
     [SerializeField]
-    TargetTime targetTimeController;
+    TimeControl targetTimeController;
 
     // TODO: SnapZone calls OnDetach on the first frame of an auto-equipped TimeGun. Have it ignore the first OnDetach().
     // Maybe better to override SnapZone?

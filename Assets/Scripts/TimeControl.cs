@@ -7,7 +7,7 @@ using BNG;
 /// <summary>
 /// Control a clock with a single BaseBehaviour at a time.
 /// </summary>
-public class TargetTime : BaseBehaviour
+public class TimeControl : BaseBehaviour
 {
     [SerializeField]
     string clockName;
