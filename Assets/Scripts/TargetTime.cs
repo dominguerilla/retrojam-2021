@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Chronos;
+using BNG;
 
 /// <summary>
 /// Control a clock with a single BaseBehaviour at a time.
@@ -14,10 +15,16 @@ public class TargetTime : BaseBehaviour
     [SerializeField]
     float slowMotionTimeScale = 0.25f;
 
+    [SerializeField]
+    AudioClip timeFreezeStartSound;
+
+    [SerializeField]
+    AudioClip timeFreezeStopSound;
+
     Clock targetClock;
     MonoBehaviour controllingObject;
 
-    bool _isSlowMotion = false;
+    bool _isTimeAltered = false;
     Timeline timeline;
 
     private void Start()
@@ -36,55 +43,54 @@ public class TargetTime : BaseBehaviour
     /// </summary>
     /// <param name="timeObject"></param>
     /// <returns></returns>
-    public bool ToggleSlowMotion(MonoBehaviour timeObject)
+    public bool SetTimeScale(MonoBehaviour timeObject, float timeScale)
     {
         if (controllingObject == null || controllingObject == timeObject)
         {
-            Debug.Log("Slowmo Toggled");
-            _isSlowMotion = !_isSlowMotion;
-            if (_isSlowMotion)
-            {
-                targetClock.localTimeScale = slowMotionTimeScale;
-                controllingObject = timeObject;
-                return true;
-            }
-            else
-            {
-                targetClock.localTimeScale = 1.0f;
-                controllingObject = null;
-                return false;
-            }
-        }
-        return false;
-    }
-
-    public bool SetSlowMotionForDuration(MonoBehaviour timeObject, float duration)
-    {
-        if (targetClock == null || _isSlowMotion) return false;
-        if (controllingObject == null || controllingObject == timeObject)
-        {
-            StartCoroutine(SlowMotion(timeObject, duration));
+            targetClock.localTimeScale = timeScale;
             return true;
         }
         return false;
     }
 
-    IEnumerator SlowMotion(MonoBehaviour timeObject, float duration) {
+    public bool StartTimeFreeze(MonoBehaviour timeObject, float duration)
+    {
+        if (targetClock == null || _isTimeAltered) return false;
+        if (controllingObject == null || controllingObject == timeObject)
+        {
+            StartCoroutine(FreezeTime(timeObject, duration));
+            return true;
+        }
+        return false;
+    }
 
+    IEnumerator FreezeTime(MonoBehaviour timeObject, float duration) {
+        controllingObject = timeObject;
+
+        VRUtils.Instance.PlaySpatialClipAt(timeFreezeStartSound, timeObject.transform.position, 1f);
+        // gradually reduce time scale
         while (targetClock.localTimeScale > 0)
         {
             targetClock.localTimeScale = Mathf.Max(targetClock.localTimeScale - 0.03f, 0);
             yield return new WaitForEndOfFrame();
         }
-        ToggleSlowMotion(timeObject);
+
+        // freeze time
+        SetTimeScale(timeObject, 0.0f);
+        _isTimeAltered = true;
         yield return timeline.WaitForSeconds(duration);
 
+        VRUtils.Instance.PlaySpatialClipAt(timeFreezeStopSound, timeObject.transform.position, 1f);
+        // gradually increase time scale
         while (targetClock.localTimeScale < 1.0)
         {
-            targetClock.localTimeScale = Mathf.Min(targetClock.localTimeScale + 0.03f, 1.0f);
+            targetClock.localTimeScale = Mathf.Min(targetClock.localTimeScale + 0.01f, 1.0f);
             yield return new WaitForEndOfFrame();
         }
-        ToggleSlowMotion(timeObject);
+        SetTimeScale(timeObject, 1.0f);
+
+        _isTimeAltered = false;
+        controllingObject = null;
         yield return null;
     }
 }

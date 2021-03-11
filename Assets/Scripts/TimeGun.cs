@@ -28,6 +28,6 @@ public class TimeGun : BaseBehaviour
 
     void StartSlowMotion(float duration)
     {
-        targetTimeController.SetSlowMotionForDuration(this, duration);
+        targetTimeController.StartTimeFreeze(this, duration);
     }
 }

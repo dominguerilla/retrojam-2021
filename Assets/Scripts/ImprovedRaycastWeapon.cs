@@ -222,6 +222,8 @@ public class ImprovedRaycastWeapon : GrabbableEvents
     [Tooltip("Passes along Raycast Hit info whenever a Raycast hit is successfully detected. Use this to display fx, add force, etc.")]
     public RaycastHitEvent onRaycastHitEvent;
 
+    public BulletTrailMaker bulletTrailMaker;
+
     /// <summary>
     /// Is the slide / receiver forced back due to last shot
     /// </summary>
@@ -235,6 +237,8 @@ public class ImprovedRaycastWeapon : GrabbableEvents
     {
         weaponRigid = GetComponent<Rigidbody>();
 
+        if(!bulletTrailMaker)
+            bulletTrailMaker = GetComponent<BulletTrailMaker>();
         if (MuzzleFlashObject)
         {
             MuzzleFlashObject.SetActive(false);
@@ -393,6 +397,9 @@ public class ImprovedRaycastWeapon : GrabbableEvents
             {
                 OnRaycastHit(hit);
             }
+            if(bulletTrailMaker)
+                bulletTrailMaker.CreateBulletTrail(MuzzlePointTransform.position, MuzzlePointTransform.forward * MaxRange);
+
         }
 
         // Apply recoil
