@@ -6,7 +6,7 @@ using UnityEngine;
 /// Allows the controlled use of already-spawned Transforms.
 /// Users are responsible for returning (using ObjectPool.AddObject()) their Transforms to the pool when finished.
 /// 
-/// Any Transform child object will become part of the pool.
+/// Any Transform child object that starts with poolObjectPrefix will become part of the pool.
 /// Objects disabled at the start of Scene will not be part of the pool.
 /// All pool object GameObjects will be disabled at the start of the scene.
 /// NOTE: Does NOT allow duplicates to be returned.
@@ -20,6 +20,8 @@ public class ObjectPool : MonoBehaviour
         private set;
     }
 
+    public string poolObjectPrefix = "";
+
     [SerializeField]
     List<Transform> pool = new List<Transform>();
 
@@ -27,12 +29,16 @@ public class ObjectPool : MonoBehaviour
     {
         if (pool == null || pool.Count == 0)
         {
-            pool = new List<Transform>(GetComponentsInChildren<Transform>());
-            pool.Remove(this.transform);
+            Transform[] childList = GetComponentsInChildren<Transform>();
+            pool = new List<Transform>();
 
-            foreach (Transform t in pool)
+            foreach (Transform t in childList)
             {
-                t.gameObject.SetActive(false);
+                if (t.gameObject.name.StartsWith(poolObjectPrefix))
+                {
+                    t.gameObject.SetActive(false);
+                    pool.Add(t);
+                }
             }
         }
     }

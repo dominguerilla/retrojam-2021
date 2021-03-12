@@ -65,8 +65,6 @@ public class Target : BaseBehaviour
         }
     }
 
-    
-
     void SetPivotPoint(Vector3 worldPosition)
     {
         this.pivotPoint = worldPosition;

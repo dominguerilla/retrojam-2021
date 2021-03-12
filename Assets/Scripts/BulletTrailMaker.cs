@@ -9,15 +9,10 @@ public class BulletTrailMaker : MonoBehaviour
 
     List<LineRenderer> activeTrails = new List<LineRenderer>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     public void CreateBulletTrail(Vector3 origin, Vector3 end)
     {
         LineRenderer trail = GetTrail();
+        if (!trail) return;
         trail.transform.position = origin;
 
         var trailPositions = new Vector3[2] { Vector3.zero, end};
@@ -47,8 +42,18 @@ public class BulletTrailMaker : MonoBehaviour
 
     LineRenderer GetTrail()
     {
-        Transform trail = bulletTrailPool.GetNextObject();
+        Transform trailTransform = bulletTrailPool.GetNextObject();
+        LineRenderer trail;
+        if (trailTransform)
+        {
+            trail = trailTransform.GetComponent<LineRenderer>();
+        }
+        else
+        {
+            trail = activeTrails[0];
+            activeTrails.Remove(trail);
+        }
         trail.gameObject.SetActive(true);
-        return trail.GetComponent<LineRenderer>();
+        return trail;
     }
 }

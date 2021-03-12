@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &6980718298828680971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419029331676445666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6090da511f8374135a15dd8655adcd44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recordingInterval: 0.5
+  _mode: 1
+  _globalClockKey: Targets
+  _rewindable: 0
+  _recordingDuration: 30
+--- !u!54 &3917269808518075736
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2913952352211654665}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &1709355439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,7 +89,7 @@ MonoBehaviour:
   DestroyOnDeath: 0
   DropOnDeath: 1
   DestroyDelay: 10
-  Respawn: 1
+  Respawn: 0
   RespawnTime: 3
   RemoveBulletHolesOnDeath: 1
   onDamaged:
@@ -68,39 +101,6 @@ MonoBehaviour:
   onRespawn:
     m_PersistentCalls:
       m_Calls: []
---- !u!54 &3917269808518075736
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2913952352211654665}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &6980718298828680971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419029331676445666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6090da511f8374135a15dd8655adcd44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _recordingInterval: 0.5
-  _mode: 1
-  _globalClockKey: Targets
-  _rewindable: 0
-  _recordingDuration: 30
 --- !u!1001 &69695191016974329
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110,6 +110,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1389075438926666779, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1389075438926666779, guid: 496ea98f57b529f4a833f65409a22871,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -117,6 +122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Target Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920561618962350064, guid: 496ea98f57b529f4a833f65409a22871,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3904871795965691247, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
@@ -172,6 +182,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5542386905830749309, guid: 496ea98f57b529f4a833f65409a22871,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6053107806781324339, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
@@ -278,6 +293,11 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8100653689970036323, guid: 496ea98f57b529f4a833f65409a22871,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8245650971190335749, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -288,6 +308,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 946e1881756d25147a03b0c022563aa6, type: 2}
+    - target: {fileID: 8726307681074174160, guid: 496ea98f57b529f4a833f65409a22871,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8971202009475290949, guid: 496ea98f57b529f4a833f65409a22871,
         type: 3}
       propertyPath: RespawnTime
