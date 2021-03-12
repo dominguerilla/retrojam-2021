@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277857656853152607}
-  m_LocalRotation: {x: -0, y: -0, z: 0.0000004768371, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.323, y: -0.794, z: 3.055}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1047,9 +1047,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetsPerWave: 12
   timeBetweenWaves: 6
-  timeAlive: 5
+  timeAlive: 4
   launchForce: 4
-  launchDelta: {x: 2, y: 2, z: 0.5}
+  launchDelta: {x: 1, y: 1.5, z: 0.5}
   targetPool: {fileID: 0}
   launchPosition: {fileID: 277857657592644080}
   isSpawning: 1

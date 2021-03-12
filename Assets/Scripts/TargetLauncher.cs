@@ -63,8 +63,7 @@ public class TargetLauncher : BaseBehaviour
         TimeDamagable target = targetTransform.GetComponent<TimeDamagable>();
         if (target)
         {
-            target.transform.position = launchPosition.position;
-            target.transform.rotation = Quaternion.identity;
+            target.SetPositionRotation(launchPosition.position, Quaternion.identity);
             target.gameObject.SetActive(true);
             target.LaunchInDirection(launchPosition.up, launchForce, launchDelta);
             yield return target.RespawnIn(timeAlive);

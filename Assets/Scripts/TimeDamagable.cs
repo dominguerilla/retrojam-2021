@@ -30,11 +30,19 @@ public class TimeDamagable : Damageable
         this.timeline.rigidbody.AddForce((direction + offset) * force, ForceMode.Impulse) ;
     }
 
+    public void SetPositionRotation(Vector3 position, Quaternion rotation)
+    {
+        this.timeline.rigidbody.isKinematic = true;
+        transform.position = position;
+        transform.rotation = rotation;
+        this.timeline.rigidbody.isKinematic = false;
+    }
+
     Vector3 GetRandomOffset(Vector3 delta)
     {
         return new Vector3(
             Random.Range(-delta.x, delta.x),
-            Random.Range(1, delta.y),
+            Random.Range(0.5f, delta.y),
             Random.Range(-delta.z, delta.z)
             ); 
     }
