@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BNG;
 
 public class TargetLauncher : BaseBehaviour
 {
@@ -8,10 +9,15 @@ public class TargetLauncher : BaseBehaviour
     public int targetsPerWave = 8;
     public float timeBetweenWaves = 6f;
     public float timeAlive = 6f;
+    public AudioClip spawnSound;
 
     [Header("Launch Settings")]
     public float launchForce = 20f;
     public Vector3 launchDelta = new Vector3();
+    
+    [Header("Scoreboard Settings")]
+    public Scoreboard currentScore;
+    public Scoreboard highScore;
 
     [SerializeField]
     ObjectPool targetPool;
@@ -41,6 +47,7 @@ public class TargetLauncher : BaseBehaviour
         {
             if (isSpawning)
             {
+                VRUtils.Instance.PlaySpatialClipAt(spawnSound, launchPosition.position, 1.0f);
                 for (int i = 0; i < targetsPerWave; i++)
                 {
                     StartCoroutine(SpawnTarget());
@@ -48,6 +55,8 @@ public class TargetLauncher : BaseBehaviour
                 }
             }
             yield return this.time.WaitForSeconds(timeBetweenWaves);
+            highScore.UpdateHighScore(currentScore.GetScore());
+            currentScore.ResetScore();
         }
     }
 
@@ -64,9 +73,13 @@ public class TargetLauncher : BaseBehaviour
         if (target)
         {
             target.SetPositionRotation(launchPosition.position, Quaternion.identity);
+            target.onDestroyed.AddListener(currentScore.IncrementScore);
             target.gameObject.SetActive(true);
             target.LaunchInDirection(launchPosition.up, launchForce, launchDelta);
+
             yield return target.RespawnIn(timeAlive);
+
+            target.onDestroyed.RemoveListener(currentScore.IncrementScore);
             targetPool.AddObject(target.transform);
         }
         else
